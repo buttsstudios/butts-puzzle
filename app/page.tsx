@@ -2,6 +2,18 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { savePuzzleScore, getPuzzleLeaderboard } from '@/lib/firebase';
+import {
+  login as authLogin,
+  getPlayerName,
+  isPremium,
+  isLoggedIn,
+  getDailyTries,
+  canPlay,
+  canAccess5x5,
+  logout as authLogout,
+  setPremium,
+  decrementTries,
+} from '@/lib/auth';
 
 interface Score {
   id: string;
@@ -11,9 +23,9 @@ interface Score {
   gridSize: number;
 }
 
-export default function ButtsPuzzle() {
+export default function SlidingNumbers() {
   const [playerName, setPlayerName] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedInState, setIsLoggedInState] = useState(false);
   const [gridSize, setGridSize] = useState(3);
   const [tiles, setTiles] = useState<number[]>([]);
   const [emptyIndex, setEmptyIndex] = useState(0);
@@ -25,16 +37,32 @@ export default function ButtsPuzzle() {
   const [isWin, setIsWin] = useState(false);
   const [leaderboard, setLeaderboard] = useState<Score[]>([]);
   const [bestTime, setBestTime] = useState<number | null>(null);
+  const [dailyTries, setDailyTries] = useState(5);
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
+  const [paywallMessage, setPaywallMessage] = useState('');
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const name = getPlayerName();
+    if (name) {
+      setPlayerName(name);
+      setIsLoggedInState(true);
+      setDailyTries(getDailyTries());
+      setIsPremiumUser(isPremium());
       loadLeaderboard();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedInState) {
       initGame();
     }
     return () => {
       if (timerInterval) clearInterval(timerInterval);
     };
-  }, [isLoggedIn, gridSize]);
+  }, [isLoggedInState, gridSize]);
 
   const loadLeaderboard = async () => {
     const scores = await getPuzzleLeaderboard(gridSize);
@@ -45,6 +73,18 @@ export default function ButtsPuzzle() {
   };
 
   const initGame = useCallback(() => {
+    if (!canPlay()) {
+      setPaywallMessage('Daily limit reached! Come back tomorrow for more free games.');
+      setShowPaywallModal(true);
+      return;
+    }
+
+    if (gridSize === 5 && !canAccess5x5()) {
+      setPaywallMessage('5x5 board is available for premium users only. Upgrade to unlock!');
+      setShowPaywallModal(true);
+      return;
+    }
+
     const newTiles = Array.from({ length: gridSize * gridSize }, (_, i) => i);
     const newEmptyIndex = gridSize * gridSize - 1;
     setTiles(newTiles);
@@ -53,6 +93,7 @@ export default function ButtsPuzzle() {
     setElapsed(0);
     setIsWin(false);
     setMessage('Click a tile next to the empty space to move it');
+    setGameStarted(false);
     
     if (timerInterval) clearInterval(timerInterval);
     setStartTime(null);
@@ -77,6 +118,7 @@ export default function ButtsPuzzle() {
     setElapsed(0);
     setIsWin(false);
     setMessage('Click a tile next to the empty space to move it');
+    setGameStarted(false);
     
     if (timerInterval) clearInterval(timerInterval);
     setStartTime(null);
@@ -96,18 +138,10 @@ export default function ButtsPuzzle() {
   };
 
   const moveTile = (index: number) => {
-    if (isWin) return;
+    if (isWin || !gameStarted) return;
     
     const neighbors = getNeighbors(emptyIndex);
     if (!neighbors.includes(index)) return;
-    
-    if (!startTime) {
-      setStartTime(Date.now());
-      const interval = setInterval(() => {
-        setElapsed(Math.floor((Date.now() - (startTime || Date.now())) / 1000));
-      }, 1000);
-      setTimerInterval(interval);
-    }
     
     const newTiles = [...tiles];
     [newTiles[emptyIndex], newTiles[index]] = [newTiles[index], newTiles[emptyIndex]];
@@ -147,13 +181,21 @@ export default function ButtsPuzzle() {
   };
 
   const handleDifficulty = (size: number) => {
+    if (size === 5 && !canAccess5x5()) {
+      setPaywallMessage('5x5 board is available for premium users only. Upgrade to unlock!');
+      setShowPaywallModal(true);
+      return;
+    }
     setGridSize(size);
   };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (playerName.trim()) {
-      setIsLoggedIn(true);
+      authLogin(playerName.trim());
+      setIsLoggedInState(true);
+      setDailyTries(getDailyTries());
+      setIsPremiumUser(isPremium());
     }
   };
 
@@ -162,11 +204,65 @@ export default function ButtsPuzzle() {
     initGame();
   };
 
-  if (!isLoggedIn) {
+  const startTimer = () => {
+    if (!startTime) {
+      setStartTime(Date.now());
+      const interval = setInterval(() => {
+        setElapsed(Math.floor((Date.now() - (startTime || Date.now())) / 1000));
+      }, 1000);
+      setTimerInterval(interval);
+    }
+  };
+
+  const handleTileClick = (index: number) => {
+    if (!gameStarted) {
+      setGameStarted(true);
+      decrementTries();
+      setDailyTries(getDailyTries());
+      startTimer();
+    }
+    moveTile(index);
+  };
+
+  const handleNewGame = () => {
+    const remaining = getDailyTries();
+    if (remaining <= 0) {
+      setPaywallMessage('Daily limit reached! Come back tomorrow for more free games.');
+      setShowPaywallModal(true);
+      return;
+    }
+    
+    if (gridSize === 5 && !canAccess5x5()) {
+      setPaywallMessage('5x5 board is available for premium users only. Upgrade to unlock!');
+      setShowPaywallModal(true);
+      return;
+    }
+    
+    setDailyTries(getDailyTries());
+    if (timerInterval) clearInterval(timerInterval);
+    initGame();
+  };
+
+  const handleLogout = () => {
+    authLogout();
+    setIsLoggedInState(false);
+    setPlayerName('');
+    setGridSize(3);
+    setTiles([]);
+    setIsWin(false);
+    setMessage('Enter your name to play');
+    if (timerInterval) clearInterval(timerInterval);
+  };
+
+  const handleUpgradeClick = () => {
+    setShowUpgradeModal(true);
+  };
+
+  if (!isLoggedInState) {
     return (
       <div className="login-overlay">
         <div className="login-box">
-          <h1>Butts Puzzle</h1>
+          <h1>Sliding Numbers</h1>
           <p style={{ marginBottom: '1rem', color: '#888' }}>Enter your name to play</p>
           <form onSubmit={handleLogin}>
             <input
@@ -187,11 +283,23 @@ export default function ButtsPuzzle() {
 
   return (
     <div className="container">
-      <h1>Butts Puzzle</h1>
+      <div className="header-row">
+        <h1>Sliding Numbers</h1>
+        <div className="header-actions">
+          {!isPremiumUser && (
+            <button className="btn btn-premium btn-small" onClick={handleUpgradeClick}>
+              Upgrade
+            </button>
+          )}
+          {isPremiumUser && <span className="premium-badge">Premium</span>}
+          <button className="btn btn-small btn-secondary" onClick={handleLogout}>Logout</button>
+        </div>
+      </div>
       <p className="subtitle">Sliding tile puzzle - arrange numbers in order</p>
       
       <div className="stats">
         <div className="stat">Player: {playerName}</div>
+        <div className="stat">Tries: {dailyTries}/5</div>
         <div className="stat">Moves: {moves}</div>
         <div className="stat">Time: {formatTime(elapsed)}</div>
         <div className="stat">Best: {bestTime ? formatTime(bestTime) : '-'}</div>
@@ -205,6 +313,7 @@ export default function ButtsPuzzle() {
             onClick={() => handleDifficulty(size)}
           >
             {size}x{size}
+            {size === 5 && !isPremiumUser && <span className="lock-icon">🔒</span>}
           </button>
         ))}
       </div>
@@ -217,7 +326,7 @@ export default function ButtsPuzzle() {
           <div
             key={index}
             className={`tile ${tile === gridSize * gridSize - 1 ? 'empty' : ''}`}
-            onClick={() => moveTile(index)}
+            onClick={() => handleTileClick(index)}
           >
             {tile !== gridSize * gridSize - 1 ? tile + 1 : ''}
           </div>
@@ -225,7 +334,7 @@ export default function ButtsPuzzle() {
       </div>
       
       <div className="actions">
-        <button className="btn btn-primary" onClick={newGame}>
+        <button className="btn btn-primary" onClick={handleNewGame}>
           New Game
         </button>
         <button className="btn btn-secondary" onClick={solve}>
@@ -250,6 +359,41 @@ export default function ButtsPuzzle() {
           ))
         )}
       </div>
+
+      {showPaywallModal && (
+        <div className="paywall-overlay" onClick={() => setShowPaywallModal(false)}>
+          <div className="paywall-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>🔒 Premium Required</h2>
+            <p>{paywallMessage}</p>
+            {paywallMessage.includes('5x5') && (
+              <button className="btn btn-premium" onClick={() => { setShowPaywallModal(false); setShowUpgradeModal(true); }}>
+                Upgrade to Premium
+              </button>
+            )}
+            <button className="btn btn-primary" onClick={() => setShowPaywallModal(false)}>
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showUpgradeModal && (
+        <div className="paywall-overlay" onClick={() => setShowUpgradeModal(false)}>
+          <div className="paywall-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>⭐ Upgrade to Premium</h2>
+            <p>Get unlimited daily plays and access to 5x5 boards!</p>
+            <ul className="premium-features">
+              <li>✓ Unlimited daily games</li>
+              <li>✓ Access to 5x5 challenge boards</li>
+              <li>✓ No ads (coming soon)</li>
+            </ul>
+            <p style={{ color: '#888', fontSize: '0.9rem', marginTop: '1rem' }}>Premium subscription coming soon!</p>
+            <button className="btn btn-primary" onClick={() => setShowUpgradeModal(false)}>
+              Coming Soon
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
