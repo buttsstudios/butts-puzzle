@@ -43,6 +43,7 @@ export default function SlidingNumbers() {
   const [paywallMessage, setPaywallMessage] = useState('');
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showWinModal, setShowWinModal] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
@@ -170,6 +171,7 @@ export default function SlidingNumbers() {
       const finalTime = startTime ? Math.floor((Date.now() - startTime) / 1000) : elapsed;
       
       setMessage(`Congratulations! Solved in ${finalMoves} moves and ${formatTime(finalTime)}!`);
+      setShowWinModal(true);
       savePuzzleScore(playerName, finalMoves, finalTime, gridSize);
       loadLeaderboard();
     }
@@ -358,7 +360,7 @@ export default function SlidingNumbers() {
       <div className="leaderboard">
         <h3>🏆 Leaderboard ({gridSize}x{gridSize})</h3>
         {leaderboard.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#666' }}>No scores yet</p>
+          <p style={{ textAlign: 'center', color: '#666' }}>No scores yet - be the first! 🎮</p>
         ) : (
           leaderboard.map((entry, i) => (
             <div key={entry.id} className="leaderboard-entry">
@@ -427,6 +429,32 @@ export default function SlidingNumbers() {
             <button className="btn btn-primary" style={{ marginTop: '1.5rem' }} onClick={() => setShowHelp(false)}>
               Got it!
             </button>
+          </div>
+        </div>
+      )}
+
+      {showWinModal && (
+        <div className="paywall-overlay" onClick={() => setShowWinModal(false)}>
+          <div className="paywall-modal" style={{ borderColor: '#4CAF50' }} onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ color: '#4CAF50' }}>🎉 Congratulations!</h2>
+            <p>You solved the puzzle!</p>
+            <p className="premium-price">{moves + 1} moves / {formatTime(startTime ? Math.floor((Date.now() - startTime) / 1000) : elapsed)}</p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
+              <button className="btn btn-primary" onClick={() => setShowWinModal(false)}>
+                Awesome!
+              </button>
+              <button className="btn btn-secondary" onClick={() => {
+                const text = `I solved Sliding Numbers in ${moves + 1} moves! Can you beat me? 🎮`;
+                if (navigator.share) {
+                  navigator.share({ text });
+                } else {
+                  navigator.clipboard.writeText(text);
+                  setMessage('Score copied to clipboard!');
+                }
+              }}>
+                Share
+              </button>
+            </div>
           </div>
         </div>
       )}
