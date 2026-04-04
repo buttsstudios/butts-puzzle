@@ -45,6 +45,13 @@ export default function SlidingNumbers() {
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('premium') === 'true') {
+      setPremium(true);
+      setIsPremiumUser(true);
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+    
     const name = getPlayerName();
     if (name) {
       setPlayerName(name);
@@ -388,7 +395,7 @@ export default function SlidingNumbers() {
               <li>✓ One-time purchase, yours forever</li>
             </ul>
             <p className="premium-price">$2.99</p>
-            <button className="btn btn-primary" onClick={() => window.open('https://buy.stripe.com/14A14gfh93E0dcZ71l7Re05', '_blank')}>
+            <button className="btn btn-primary" onClick={() => window.open('https://buy.stripe.com/eVqfZab0T5M88WJclF7Re07', '_blank')}>
               Unlock Now
             </button>
           </div>
