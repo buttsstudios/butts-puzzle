@@ -380,16 +380,16 @@ export default function SlidingNumbers() {
       {showUpgradeModal && (
         <div className="paywall-overlay" onClick={() => setShowUpgradeModal(false)}>
           <div className="paywall-modal" onClick={(e) => e.stopPropagation()}>
-            <h2>⭐ Upgrade to Premium</h2>
+            <h2>⭐ Unlock Premium</h2>
             <p>Get unlimited daily plays and access to 5x5 boards!</p>
             <ul className="premium-features">
               <li>✓ Unlimited daily games</li>
               <li>✓ Access to 5x5 challenge boards</li>
-              <li>✓ No ads (coming soon)</li>
+              <li>✓ One-time purchase, yours forever</li>
             </ul>
-            <p style={{ color: '#888', fontSize: '0.9rem', marginTop: '1rem' }}>Premium subscription coming soon!</p>
-            <button className="btn btn-primary" onClick={() => setShowUpgradeModal(false)}>
-              Coming Soon
+            <p className="premium-price">$2.99</p>
+            <button className="btn btn-primary" onClick={() => window.open('https://buy.stripe.com/14A14gfh93E0dcZ71l7Re05', '_blank')}>
+              Unlock Now
             </button>
           </div>
         </div>
