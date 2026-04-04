@@ -42,6 +42,7 @@ export default function SlidingNumbers() {
   const [showPaywallModal, setShowPaywallModal] = useState(false);
   const [paywallMessage, setPaywallMessage] = useState('');
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
@@ -299,6 +300,7 @@ export default function SlidingNumbers() {
             </button>
           )}
           {isPremiumUser && <span className="premium-badge">Premium</span>}
+          <button className="btn btn-small btn-secondary" onClick={() => setShowHelp(true)}>How to Play</button>
           <button className="btn btn-small btn-secondary" onClick={handleLogout}>Logout</button>
         </div>
       </div>
@@ -397,6 +399,33 @@ export default function SlidingNumbers() {
             <p className="premium-price">$2.99</p>
             <button className="btn btn-primary" onClick={() => window.open('https://buy.stripe.com/eVqfZab0T5M88WJclF7Re07', '_blank')}>
               Unlock Now
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showHelp && (
+        <div className="paywall-overlay" onClick={() => setShowHelp(false)}>
+          <div className="paywall-modal" onClick={(e) => e.stopPropagation()}>
+            <h2>🎯 How to Play</h2>
+            <div style={{ textAlign: 'left', marginTop: '1rem' }}>
+              <p><strong>Goal:</strong> Arrange all tiles in numerical order from 1 to N.</p>
+              <p style={{ marginTop: '0.5rem' }}><strong>How to play:</strong></p>
+              <ul style={{ marginLeft: '1.5rem', lineHeight: '1.8' }}>
+                <li>Click on a tile adjacent to the empty space to slide it</li>
+                <li>Arrange numbers in order: 1, 2, 3, ... in rows</li>
+                <li>Complete the puzzle in fewest moves and fastest time</li>
+                <li>Use "Undo" button to undo up to 10 moves</li>
+              </ul>
+              <p style={{ marginTop: '0.5rem' }}><strong>Board Sizes:</strong></p>
+              <ul style={{ marginLeft: '1.5rem', lineHeight: '1.8' }}>
+                <li>3x3 = 8 tiles (Easy)</li>
+                <li>4x4 = 15 tiles (Medium)</li>
+                <li>5x5 = 24 tiles (Hard - Premium only)</li>
+              </ul>
+            </div>
+            <button className="btn btn-primary" style={{ marginTop: '1.5rem' }} onClick={() => setShowHelp(false)}>
+              Got it!
             </button>
           </div>
         </div>
