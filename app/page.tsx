@@ -406,8 +406,8 @@ export default function SlidingNumbers() {
               <li>✓ Access to 5x5 challenge boards</li>
               <li>✓ One-time purchase, unlocked in this browser</li>
             </ul>
-            <p className="premium-price">$2.99</p>
-            <button className="btn btn-primary" onClick={() => window.open('https://buy.stripe.com/eVqfZab0T5M88WJclF7Re07', '_blank')}>
+            <p className="premium-price">$3</p>
+            <button className="btn btn-primary" onClick={() => window.open('__NEW_PAYMENT_LINK_PUZZLE_3__', '_blank')}>
               Unlock Now
             </button>
           </div>
