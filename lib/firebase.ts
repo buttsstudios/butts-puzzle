@@ -37,12 +37,15 @@ export async function getPuzzleLeaderboard(gridSize: number, limitCount = 10) {
       collection(db, "puzzle_scores"),
       orderBy("time", "asc"),
       orderBy("moves", "asc"),
-      limit(limitCount)
+      limit(200)
     );
+    // Filter by board size after a wide read (a size filter in the query would need a composite index);
+    // the old version read only 10 rows before filtering, so 4x4/5x5 boards usually showed nothing.
     const snapshot = await getDocs(q);
     return snapshot.docs
       .map(doc => ({ id: doc.id, ...doc.data() }))
-      .filter((s: any) => s.gridSize === gridSize);
+      .filter((s: any) => s.gridSize === gridSize)
+      .slice(0, limitCount);
   } catch (error) {
     console.error("Error getting leaderboard:", error);
     return [];

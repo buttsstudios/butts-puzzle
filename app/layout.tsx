@@ -3,14 +3,14 @@ import "./studios-section.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sliding Numbers - Logic Game",
-  description: "Mind-bending sliding tile puzzle - arrange numbers in order",
+  title: "Sliding Numbers · Butts Studios",
+  description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
   metadataBase: new URL("https://puzzle.buttsstudios.com"),
   openGraph: {
     type: "website",
     url: "https://puzzle.buttsstudios.com",
-    title: "Sliding Numbers - Logic Game",
-    description: "Mind-bending sliding tile puzzle - arrange numbers in order",
+    title: "Sliding Numbers · Butts Studios",
+    description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
     images: [
       {
         url: "/og-image.png",
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@buttsstudios",
     creator: "@buttsstudios",
-    title: "Sliding Numbers - Logic Game",
-    description: "Mind-bending sliding tile puzzle - arrange numbers in order",
+    title: "Sliding Numbers · Butts Studios",
+    description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
     images: ["/og-image.png"],
   },
   robots: {
