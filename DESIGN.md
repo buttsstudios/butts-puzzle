@@ -26,11 +26,13 @@ Branch `design/next-level-2026-10-16`, built on `style/studios-sections-2026-10-
 - **Leaderboard:** reads a wider window and filters by size, so each size shows its own top 10.
 - **Accessibility:** tiles are buttons with "Tile 5, row 2, column 1, in place" labels; aria-live for new boards, hints and solves; visible focus; reduced-motion turns off slides and ripples; position is shown by a shape mark, not colour alone.
 - **Mobile:** board is 100% width (max 560px) and square; tile type scales; 2-column controls under 480px; no horizontal scroll.
-- **Studios style:** shared bar/footer unchanged; games accent; 2px corners; full even borders; the old `body` flex-centring (which laid the bar, game and footer out side by side) is now a column.
+- **Studios visual pass:** display headline (Archivo 800, tight leading) with eyebrow and Newsreader lede as on buttsstudios.com, plate-style foot line, serif notes, display-type dialogs. Shared bar/footer unchanged; games accent; 2px corners; full even borders; the old `body` flex-centring (which laid the bar, game and footer out side by side) is now a column.
 - **Paid unlock unchanged in kind:** 5 practice games a day, 5x5 and unlimited practice with the $3 one-time full game, unlocked only after `/api/verify-purchase` confirms a paid Stripe session.
 
 ## Playtest (xps, headless Chromium)
-See `~/buttsstudios/staged/games_next_level/puzzle/` (before/after PNGs, a GIF of a hinted 3x3 solve) and the notes below.
+Shots and a GIF of a hinted 3x3 solve: `~/buttsstudios/staged/games_next_level/puzzle/`.
+- **Before (live puzzle.buttsstudios.com):** 4 moves in, after 3 s the timer still read 0:00; a name form blocked play; mobile `scrollWidth` 427 on a 390 screen.
+- **After (production build on xps):** following hints solved a 3x3 in 21 moves = par 21 (the exact optimum); timer ran; daily 4x4 par 62; six hinted moves + one undo counted 7 moves; the 5x5 gate showed for a non-buyer; mobile `scrollWidth` 390; no page errors. Solver bench on xps (heavily loaded): 4x4 lines of 50–62 moves in 50–820 ms, 5x5 in 40 ms–3 s.
 
 ## Next
 - Daily leaderboard (needs a Firestore field for the date, so a server-side write rule change).

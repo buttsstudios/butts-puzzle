@@ -121,7 +121,7 @@ body {
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (max-width: 480px) {
-  .modes { grid-template-columns: 1fr 1fr; }
+  .modes { grid-template-columns: repeat(3, 1fr); }
   .modes button:first-child { grid-column: 1 / -1; }
   .actions { grid-template-columns: repeat(2, 1fr); }
   .v { font-size: 17px; }
