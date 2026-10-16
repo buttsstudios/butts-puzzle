@@ -91,7 +91,7 @@ export default function SlidingNumbers() {
 
   const initGame = useCallback(() => {
     if (!canPlay()) {
-      setPaywallMessage('Daily limit reached! Come back tomorrow for more free games.');
+      setPaywallMessage('Daily limit reached. Come back tomorrow, or unlock the full game.');
       setShowPaywallModal(true);
       return;
     }
@@ -245,7 +245,7 @@ export default function SlidingNumbers() {
   const handleNewGame = () => {
     const remaining = getDailyTries();
     if (remaining <= 0) {
-      setPaywallMessage('Daily limit reached! Come back tomorrow for more free games.');
+      setPaywallMessage('Daily limit reached. Come back tomorrow, or unlock the full game.');
       setShowPaywallModal(true);
       return;
     }

@@ -1,15 +1,15 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --primary: #9C27B0;
-  --secondary: #E91E63;
-  --bg-dark: #1a1a2e;
-  --bg-darker: #16213e;
+  --primary: var(--bs-accent);
+  --secondary: var(--bs-accent);
+  --bg-dark: #121110;
+  --bg-darker: #0C0C0B;
 }
 
 body {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+  font-family: "Archivo", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bs-ink-2);
   min-height: 100vh;
   color: #fff;
   display: flex;
@@ -24,10 +24,8 @@ body {
 
 h1 {
   font-size: 2.5rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
+  color: var(--bs-bone);
 }
 
 .subtitle { color: #888; margin-bottom: 2rem; }
@@ -43,7 +41,7 @@ h1 {
 .stat {
   background: rgba(255,255,255,0.1);
   padding: 0.5rem 1.5rem;
-  border-radius: 20px;
+  border-radius: 2px;
 }
 
 .puzzle-grid {
@@ -51,15 +49,15 @@ h1 {
   gap: 8px;
   background: rgba(0,0,0,0.3);
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 2px;
   margin-bottom: 2rem;
 }
 
 .tile {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 10px;
+  background: var(--bs-accent);
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +68,7 @@ h1 {
   user-select: none;
 }
 
-.tile:hover { transform: scale(1.05); }
+.tile:hover { filter: brightness(1.08); }
 
 .tile.empty {
   background: rgba(255,255,255,0.05);
@@ -90,14 +88,14 @@ h1 {
   padding: 0.75rem 2rem;
   font-size: 1rem;
   border: none;
-  border-radius: 25px;
+  border-radius: 2px;
   cursor: pointer;
   transition: transform 0.2s;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: #fff;
+  background: var(--bs-accent);
+  color: var(--bs-ink);
 }
 
 .btn-secondary {
@@ -105,7 +103,7 @@ h1 {
   color: #fff;
 }
 
-.btn:hover { transform: scale(1.05); }
+.btn:hover { filter: brightness(1.08); }
 
 .message {
   margin-top: 1.5rem;
@@ -130,12 +128,12 @@ h1 {
   background: rgba(255,255,255,0.1);
   border: none;
   color: #fff;
-  border-radius: 15px;
+  border-radius: 2px;
   cursor: pointer;
 }
 
 .difficulty button.active {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--bs-accent);
 }
 
 .login-overlay {
@@ -149,9 +147,9 @@ h1 {
 }
 
 .login-box {
-  background: #1a1a2e;
+  background: #121110;
   padding: 2rem;
-  border-radius: 16px;
+  border-radius: 2px;
   text-align: center;
   max-width: 400px;
 }
@@ -161,7 +159,7 @@ h1 {
   padding: 0.75rem;
   margin: 0.5rem 0;
   border: 1px solid #333;
-  border-radius: 8px;
+  border-radius: 2px;
   background: #0a0a1a;
   color: #fff;
 }
@@ -170,7 +168,7 @@ h1 {
   margin-top: 2rem;
   padding: 1rem;
   background: rgba(255,255,255,0.05);
-  border-radius: 12px;
+  border-radius: 2px;
 }
 
 .leaderboard h3 {
@@ -200,10 +198,10 @@ h1 {
 }
 
 .premium-badge {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+  background: var(--bs-gold);
   color: #000;
   padding: 0.25rem 0.75rem;
-  border-radius: 12px;
+  border-radius: 2px;
   font-size: 0.8rem;
   font-weight: bold;
 }
@@ -214,10 +212,10 @@ h1 {
 }
 
 .btn-premium {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+  background: var(--bs-gold);
   color: #000;
   border: none;
-  border-radius: 25px;
+  border-radius: 2px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -238,9 +236,9 @@ h1 {
 }
 
 .paywall-modal {
-  background: #1a1a2e;
+  background: #121110;
   padding: 2rem;
-  border-radius: 16px;
+  border-radius: 2px;
   text-align: center;
   max-width: 400px;
   border: 2px solid #FFD700;
