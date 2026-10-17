@@ -301,9 +301,15 @@ export default function SlidingNumbers() {
           <h1>Sliding<br />Numbers<span className="accent">.</span></h1>
           <p className="sn-lede">Put them back in order. One new board every day.</p>
         </div>
-        <div className="sn-tools">
-          {premium ? <span className="tag">Full game</span> : <button className="tool gold" onClick={() => setModal('upgrade')}>Full game · $3</button>}
+        {/* one bar, How to play first (header bar pass 2026-10-17) */}
+        <div className="sn-tools" role="toolbar" aria-label="Game options">
           <HowToButton howto={howto} />
+          {premium ? <span className="tag">Full game</span> : (
+            <button className="tool gold" onClick={() => setModal('upgrade')}>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M2.5 2.5h5.2l5.8 5.8-5.2 5.2-5.8-5.8z" /><circle cx="5.6" cy="5.6" r="1" /></svg>
+              <span>Full game · $3</span>
+            </button>
+          )}
         </div>
       </div>
 

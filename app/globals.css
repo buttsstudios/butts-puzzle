@@ -20,14 +20,18 @@ body {
 .sn-lede { font: 400 clamp(17px, 2vw, 20px)/1.4 var(--bs-serif); color: var(--bs-bone-2); margin-top: 10px; max-width: 30ch; }
 .sn-foot { display: flex; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--bs-line);
   font: 600 11px/1.3 var(--bs-display); letter-spacing: .1em; text-transform: uppercase; color: var(--bs-muted); }
-.sn-tools { display: flex; gap: 8px; align-items: center; }
+/* header bar (2026-10-17): one row, How to play first, every button 36px with a 16px icon and its label */
+.sn-tools { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
 .tool, .tag {
   background: transparent; color: var(--bs-bone-2); border: 1px solid var(--bs-line); border-radius: 2px; cursor: pointer;
-  font: 600 11px/1 var(--bs-display); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px;
+  font: 600 11px/1 var(--bs-display); letter-spacing: .08em; text-transform: uppercase; padding: 0 12px;
+  height: 36px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
 }
 .tool:hover, .tool:focus-visible { color: var(--bs-bone); border-color: var(--bs-muted); outline: none; }
 .tool.gold { color: var(--bs-gold); border-color: color-mix(in srgb, var(--bs-gold) 45%, transparent); }
-.tag { cursor: default; color: var(--bs-gold); }
+/* the owned-game note is info, not a control: plain muted text */
+.tag { cursor: default; color: var(--bs-muted); border: 0; padding: 0; height: auto; }
+.tool svg { width: 16px; height: 16px; flex: none; }
 
 .modes { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 1px; background: var(--bs-line); border: 1px solid var(--bs-line); border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
 .modes button {

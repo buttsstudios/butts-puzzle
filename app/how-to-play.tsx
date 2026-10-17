@@ -66,7 +66,8 @@ export type Howto = ReturnType<typeof useHowto>;
 export function HowToButton({ howto, className = 'tool' }: { howto: Howto; className?: string }) {
   return (
     <button ref={howto.btnRef} type="button" className={className} aria-expanded={howto.open} aria-controls="how-to-play" onClick={howto.toggle}>
-      How to play
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5" /><path d="M6.2 6.2a1.9 1.9 0 0 1 3.7.6c0 1.3-1.9 1.6-1.9 2.8" /><path d="M8 11.6v.4" /></svg>
+      <span>How to play</span>
     </button>
   );
 }
