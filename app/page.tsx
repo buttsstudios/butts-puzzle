@@ -15,6 +15,7 @@ import {
 import {
   Board, generate, isSolved, neighbors, solve, par as computePar, rng, dailySeed, todayKey, solvedBoard,
 } from '@/lib/puzzle';
+import HowToPlay from './how-to-play';
 
 interface Score { id: string; playerName: string; moves: number; time: number; gridSize: number; }
 type Mode = 'practice' | 'daily';
@@ -358,6 +359,11 @@ export default function SlidingNumbers() {
 
       <div className="sn-foot"><span>In the browser · tap, swipe or keys</span><span>Full game $3 one-time</span></div>
 
+      <section className="htp" id="how-to-play" aria-labelledby="htp-title">
+        <h2 id="htp-title">How to play</h2>
+        <HowToPlay about />
+      </section>
+
       <section className="lb">
         <h2>Leaderboard · {n}x{n}</h2>
         {leaderboard.length === 0 ? (
@@ -438,16 +444,7 @@ export default function SlidingNumbers() {
         <div className="overlay" onClick={() => setModal('none')}>
           <div className="dialog help" role="dialog" aria-modal="true" aria-label="How to play" onClick={(e) => e.stopPropagation()}>
             <h2>How to play</h2>
-            <p>Put the numbers in order, left to right and top to bottom, with the gap in the last corner.</p>
-            <div className="mini" aria-hidden="true">{[1, 2, 3, 4, 5, 6, 7, 8].map((x) => <i key={x}>{x}</i>)}<i className="gap" /></div>
-            <ul>
-              <li>Tap any tile in the gap’s row or column to slide it, and every tile between, into the gap.</li>
-              <li>Swipe, or use the arrow keys / WASD: the tile moves the way you push.</li>
-              <li><b>Undo</b> (Z) steps back one move; it still counts as a move. <b>Hint</b> (H) shows the next tile on a short line to the finish.</li>
-              <li>A small green mark means a tile is home.</li>
-              <li><b>Par</b> on 3x3 is the shortest possible solution; on 4x4 it is the shortest line our solver found.</li>
-              <li>The <b>daily</b> is one 4x4 board, the same for everyone each day. Solve it on consecutive days to build a streak.</li>
-            </ul>
+            <HowToPlay />
             <button className="btn wide" onClick={() => setModal('none')}>Play</button>
           </div>
         </div>
