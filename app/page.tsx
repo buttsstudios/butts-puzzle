@@ -15,7 +15,7 @@ import {
 import {
   Board, generate, isSolved, neighbors, solve, par as computePar, rng, dailySeed, todayKey, solvedBoard,
 } from '@/lib/puzzle';
-import HowToPlay from './how-to-play';
+import { HowToButton, HowToPanel, useHowto } from './how-to-play';
 import ShareButton from './share-button';
 import { marksGrid, utcDay } from '@/lib/share';
 
@@ -64,7 +64,8 @@ export default function SlidingNumbers() {
   const [name, setName] = useState('');
   const [posted, setPosted] = useState(false);
   const [leaderboard, setLeaderboard] = useState<Score[]>([]);
-  const [modal, setModal] = useState<'none' | 'paywall' | 'upgrade' | 'help' | 'win'>('none');
+  const [modal, setModal] = useState<'none' | 'paywall' | 'upgrade' | 'win'>('none');
+  const howto = useHowto();
   const [paywallMsg, setPaywallMsg] = useState('');
   const [announce, setAnnounce] = useState('');
   const [toast, setToast] = useState('');
@@ -91,7 +92,7 @@ export default function SlidingNumbers() {
     setParMoves(null);
     if (s <= 4) setTimeout(() => setParMoves(computePar(board, s)), 30); // exact on 3x3; solver line on 4x4
     setAnnounce(m === 'daily' ? `Daily puzzle for ${todayKey()}, ${s} by ${s}.` : `New ${s} by ${s} board.`);
-    setModal((cur) => (cur === 'help' ? cur : 'none'));
+    setModal('none');
   }, []);
 
   // ---------- boot: verified purchase + saved state ----------
@@ -110,7 +111,6 @@ export default function SlidingNumbers() {
     setTries(getDailyTries());
     setStreak(dailyStreak());
     newGame(3, 'practice');
-    if (!LS.get('sliding_numbers_seen_help')) { setModal('help'); LS.set('sliding_numbers_seen_help', '1'); }
     return () => stopTimer();
   }, [newGame]);
 
@@ -215,6 +215,7 @@ export default function SlidingNumbers() {
   useEffect(() => {
     const onKey = (ev: KeyboardEvent) => {
       if (modal !== 'none') { if (ev.key === 'Escape') setModal('none'); return; }
+      if (howto.open) return; // reading How to play: arrow keys scroll the page
       const t = ev.target as HTMLElement;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
       const map: Record<string, Dir> = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
@@ -302,9 +303,11 @@ export default function SlidingNumbers() {
         </div>
         <div className="sn-tools">
           {premium ? <span className="tag">Full game</span> : <button className="tool gold" onClick={() => setModal('upgrade')}>Full game · $3</button>}
-          <button className="tool" onClick={() => setModal('help')}>How to play</button>
+          <HowToButton howto={howto} />
         </div>
       </div>
+
+      <HowToPanel howto={howto} />
 
       <div className="modes" role="tablist" aria-label="Mode">
         <button role="tab" aria-selected={mode === 'daily'} className={mode === 'daily' ? 'on' : ''} onClick={() => newGame(DAILY_SIZE, 'daily')}>
@@ -362,11 +365,6 @@ export default function SlidingNumbers() {
       </p>
 
       <div className="sn-foot"><span>In the browser · tap, swipe or keys</span><span>Full game $3 one-time</span></div>
-
-      <section className="htp" id="how-to-play" aria-labelledby="htp-title">
-        <h2 id="htp-title">How to play</h2>
-        <HowToPlay about />
-      </section>
 
       <section className="lb">
         <h2>Leaderboard · {n}x{n}</h2>
@@ -444,15 +442,6 @@ export default function SlidingNumbers() {
         </div>
       )}
 
-      {modal === 'help' && (
-        <div className="overlay" onClick={() => setModal('none')}>
-          <div className="dialog help" role="dialog" aria-modal="true" aria-label="How to play" onClick={(e) => e.stopPropagation()}>
-            <h2>How to play</h2>
-            <HowToPlay />
-            <button className="btn wide" onClick={() => setModal('none')}>Play</button>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

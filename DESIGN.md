@@ -21,7 +21,7 @@ Branch `design/next-level-2026-10-16`, built on `style/studios-sections-2026-10-
 - **Undo** (Z): real, unlimited, and honest (it counts as a move). "Show Solution" removed.
 - **Daily:** one 4x4 board per date, the same for everyone, always open (it does not use a practice game). Replays keep your best; consecutive days build a streak. Share result posts a short text result (moves, par, time, hints, marks).
 - **Feel:** tiles slide (120 ms ease-out, keyed by tile so they travel), tap any tile in the gap's row/column to slide the whole run, swipe and arrow/WASD control, a home mark on tiles in place, an "In place" counter, a diagonal ripple on solve, then the result dialog.
-- **Onboarding:** play starts immediately; a short how-to (with a mini solved board) shows once. The name is asked only when posting a time.
+- **Onboarding:** play starts immediately; How to play stays closed until the player opens it from the "How to play" button by the title. The name is asked only when posting a time.
 - **Timer:** starts on the first move, from a ref; stops on solve.
 - **Leaderboard:** reads a wider window and filters by size, so each size shows its own top 10.
 - **Accessibility:** tiles are buttons with "Tile 5, row 2, column 1, in place" labels; aria-live for new boards, hints and solves; visible focus; reduced-motion turns off slides and ripples; position is shown by a shape mark, not colour alone.
