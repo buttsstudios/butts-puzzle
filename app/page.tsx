@@ -16,6 +16,10 @@ import {
   Board, generate, isSolved, neighbors, solve, par as computePar, rng, dailySeed, todayKey, solvedBoard,
 } from '@/lib/puzzle';
 import HowToPlay from './how-to-play';
+import ShareButton from './share-button';
+import { marksGrid, utcDay } from '@/lib/share';
+
+const SHARE_URL = 'https://puzzle.buttsstudios.com/';
 
 interface Score { id: string; playerName: string; moves: number; time: number; gridSize: number; }
 type Mode = 'practice' | 'daily';
@@ -254,16 +258,16 @@ export default function SlidingNumbers() {
     return 1;
   })();
 
-  const shareText = () => {
-    const head = mode === 'daily' ? `Sliding Numbers daily ${todayKey()} (${n}x${n})` : `Sliding Numbers ${n}x${n}`;
-    const parTxt = parMoves ? ` (par ${parMoves})` : '';
-    const st = stars ? ' ' + '■'.repeat(stars) + '□'.repeat(3 - stars) : '';
-    return `${head}\n${moves} moves${parTxt} · ${fmt(elapsed)} · ${hints ? hints + ' hints' : 'no hints'}${st}\nhttps://puzzle.buttsstudios.com`;
-  };
-  const share = async () => {
-    const text = shareText();
-    try { if (navigator.share) { await navigator.share({ text }); return; } } catch (e) { if ((e as Error).name === 'AbortError') return; }
-    try { await navigator.clipboard.writeText(text); setToast('Result copied.'); } catch { setToast('Could not copy the result.'); }
+  // The player's real result. The daily board is seeded by the local date, so it carries that date (the board's own);
+  // other boards carry the UTC day. Stars line: par marks, spoiler-free.
+  const shareSpec = () => {
+    const parTxt = parMoves ? `, par ${parMoves}` : '';
+    const hintTxt = hints ? `${hints} hint${hints > 1 ? 's' : ''}` : 'no hints';
+    const text = mode === 'daily'
+      ? `I solved today’s Sliding Numbers daily (${n}x${n}) in ${moves} moves${parTxt}, ${fmt(elapsed)}, ${hintTxt} (${todayKey()}). Can you?`
+      : `I solved a ${n}x${n} Sliding Numbers board in ${moves} moves${parTxt}, ${fmt(elapsed)}, ${hintTxt} (${utcDay()} UTC). Can you?`;
+    const grid = stars ? '\n' + marksGrid([stars >= 1, stars >= 2, stars >= 3]) : '';
+    return { text: text + grid, url: SHARE_URL, campaign: 'play' as const, title: 'Sliding Numbers' };
   };
 
   const post = async () => {
@@ -405,7 +409,7 @@ export default function SlidingNumbers() {
             )}
             {posted && <p className="muted small">Posted.</p>}
             <div className="row">
-              <button className="btn" onClick={share}>Share result</button>
+              <ShareButton item="sliding-numbers" primary spec={shareSpec()} />
               <button className="btn ghost" onClick={() => newGame(mode === 'daily' ? 4 : n, 'practice')}>Next board</button>
             </div>
           </div>

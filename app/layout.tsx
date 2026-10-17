@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Sliding Numbers Game",
+        alt: "Sliding Numbers",
       },
     ],
     siteName: "Butts Studios",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     creator: "@buttsstudios",
     title: "Sliding Numbers · Butts Studios",
     description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,

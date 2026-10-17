@@ -2,77 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Open Graph card, 1200x630. Rendered headless (Chromium screenshot, JPEG) to og-image.jpg.
+       Only facts from the page's own metadata are drawn: the name, one line, the address. No stats, no claims. -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      width: 1200px;
-      height: 630px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 60px;
+      width: 1200px; height: 630px; position: relative; overflow: hidden; font-family: 'Archivo', sans-serif;
+      background-color: #070908;
+      background-image: linear-gradient(#141816 1px, transparent 1px), linear-gradient(90deg, #141816 1px, transparent 1px);
+      background-size: 40px 40px; color: #F1ECE2;
     }
-    .puzzle-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 60px);
-      grid-template-rows: repeat(4, 60px);
-      gap: 8px;
-      margin-bottom: 40px;
-    }
-    .puzzle-piece {
-      background: #9C27B0;
-      border-radius: 8px;
-    }
-    .puzzle-piece:nth-child(odd) { background: #E91E63; }
-    .puzzle-piece:nth-child(3n) { background: #9C27B0; opacity: 0.6; }
-    .puzzle-piece:nth-child(2n) { opacity: 0.8; }
-    h1 {
-      font-size: 52px;
-      font-weight: 700;
-      color: white;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    h1 em { color: #9C27B0; font-style: normal; }
-    p {
-      font-size: 20px;
-      color: #888;
-      text-align: center;
-    }
-    .badge {
-      position: absolute;
-      bottom: 40px;
-      right: 60px;
-      font-size: 14px;
-      color: #555;
-      font-family: 'Courier New', monospace;
-    }
+    .eyebrow { position: absolute; left: 72px; top: 96px; font-weight: 600; font-size: 20px; letter-spacing: .14em; color: #7BC47F; }
+    .name { position: absolute; left: 66px; top: 136px; font-weight: 800; font-size: 112px; letter-spacing: -.04em; line-height: 1; }
+    .name i { font-style: normal; color: #7BC47F; }
+    .line { position: absolute; left: 72px; top: 290px; font-size: 34px; color: #D9D3C7; max-width: 640px; line-height: 1.25; }
+    .foot { position: absolute; left: 72px; bottom: 64px; font-weight: 600; font-size: 20px; color: #9A948A; }
+    svg { position: absolute; right: 0; top: 0; }
   </style>
 </head>
 <body>
-  <div class="puzzle-grid">
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-    <div class="puzzle-piece"></div>
-  </div>
-  <h1>Mind-Bending <em>Puzzles</em></h1>
-  <p>Challenge your logic and problem-solving skills</p>
-  <div class="badge">puzzle.buttsstudios.com</div>
+  <svg width="1200" height="630" viewBox="0 0 1200 630">
+    <rect x="752" y="142" width="392" height="392" rx="4" fill="none" stroke="#2B2824" stroke-width="2"/><rect x="760" y="150" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="804" y="208" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">1</text><rect x="856" y="150" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="900" y="208" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">2</text><rect x="952" y="150" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="996" y="208" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">3</text><rect x="1048" y="150" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="1092" y="208" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">4</text><rect x="760" y="246" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="804" y="304" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">5</text><rect x="856" y="246" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="900" y="304" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">6</text><rect x="952" y="246" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="996" y="304" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">7</text><rect x="1048" y="246" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="1092" y="304" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">8</text><rect x="760" y="342" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="804" y="400" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">9</text><rect x="856" y="342" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="900" y="400" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">10</text><rect x="952" y="342" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="996" y="400" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">11</text><rect x="1048" y="342" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="1092" y="400" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">12</text><rect x="760" y="438" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="804" y="496" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">13</text><rect x="856" y="438" width="88" height="88" rx="3" fill="#121110" stroke="#2B2824" stroke-width="2"/><text x="900" y="496" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#F1ECE2">14</text><rect x="1048" y="438" width="88" height="88" rx="3" fill="#7BC47F" stroke="#7BC47F" stroke-width="2"/><text x="1092" y="496" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="36" fill="#050707">15</text>
+  </svg>
+  <div class="eyebrow">BUTTS STUDIOS · GAMES</div>
+  <div class="name">Sliding<br>Numbers<i>.</i></div>
+    <div class="foot">A daily 4x4 board for everyone, with hints, undo and par · puzzle.buttsstudios.com</div>
 </body>
 </html>
