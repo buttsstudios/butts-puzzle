@@ -429,7 +429,7 @@ export default function SlidingNumbers() {
               <li>One-time purchase, unlocked in this browser</li>
             </ul>
             <p className="price">$3</p>
-            <button className="btn wide" onClick={() => window.open('__NEW_PAYMENT_LINK_PUZZLE_3__', '_blank')}>Unlock now</button>
+            <button className="btn wide" onClick={() => window.open('https://buy.stripe.com/4gM7sEd912zWc8V0CX7Re0b', '_blank')}>Unlock now</button>
           </div>
         </div>
       )}
