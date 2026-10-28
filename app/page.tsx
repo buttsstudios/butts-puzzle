@@ -95,7 +95,7 @@ export default function SlidingNumbers() {
     const sessionId = params.get('session_id');
     if (sessionId) {
       window.history.replaceState({}, '', window.location.pathname);
-      fetch(`/api/verify-purchase?session_id=${encodeURIComponent(sessionId)}`)
+      fetch(`/games/sliding-numbers/api/verify-purchase?session_id=${encodeURIComponent(sessionId)}`)
         .then((r) => r.json())
         .then((d) => { if (d && d.premium === true) { setPremium(true); setPremiumState(true); setToast('Full game unlocked in this browser.'); } })
         .catch(() => {});
@@ -257,7 +257,7 @@ export default function SlidingNumbers() {
     const head = mode === 'daily' ? `Sliding Numbers daily ${todayKey()} (${n}x${n})` : `Sliding Numbers ${n}x${n}`;
     const parTxt = parMoves ? ` (par ${parMoves})` : '';
     const st = stars ? ' ' + '■'.repeat(stars) + '□'.repeat(3 - stars) : '';
-    return `${head}\n${moves} moves${parTxt} · ${fmt(elapsed)} · ${hints ? hints + ' hints' : 'no hints'}${st}\nhttps://puzzle.buttsstudios.com`;
+    return `${head}\n${moves} moves${parTxt} · ${fmt(elapsed)} · ${hints ? hints + ' hints' : 'no hints'}${st}\nhttps://buttsstudios.com/games/sliding-numbers`;
   };
   const share = async () => {
     const text = shareText();

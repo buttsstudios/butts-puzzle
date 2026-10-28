@@ -5,10 +5,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Sliding Numbers · Butts Studios",
   description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
-  metadataBase: new URL("https://puzzle.buttsstudios.com"),
+  metadataBase: new URL("https://buttsstudios.com"),
   openGraph: {
     type: "website",
-    url: "https://puzzle.buttsstudios.com",
+    url: "https://buttsstudios.com/games/sliding-numbers",
     title: "Sliding Numbers · Butts Studios",
     description: "A sliding tile puzzle with a daily 4x4 board for everyone, hints, undo and par.",
     images: [
