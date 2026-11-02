@@ -2,7 +2,7 @@
   "name": "Butts Puzzle",
   "short_name": "Butts Puzzle",
   "description": "Mind-bending puzzles that challenge your logic and problem-solving skills.",
-  "start_url": "/",
+  "start_url": "/games/sliding-numbers/",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#9C27B0",

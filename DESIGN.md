@@ -31,7 +31,7 @@ Branch `design/next-level-2026-10-16`, built on `style/studios-sections-2026-10-
 
 ## Playtest (xps, headless Chromium)
 Shots and a GIF of a hinted 3x3 solve: `~/buttsstudios/staged/games_next_level/puzzle/`.
-- **Before (live puzzle.buttsstudios.com):** 4 moves in, after 3 s the timer still read 0:00; a name form blocked play; mobile `scrollWidth` 427 on a 390 screen.
+- **Before (live buttsstudios.com/games/sliding-numbers):** 4 moves in, after 3 s the timer still read 0:00; a name form blocked play; mobile `scrollWidth` 427 on a 390 screen.
 - **After (production build on xps):** following hints solved a 3x3 in 21 moves = par 21 (the exact optimum); timer ran; daily 4x4 par 62; six hinted moves + one undo counted 7 moves; the 5x5 gate showed for a non-buyer; mobile `scrollWidth` 390; no page errors. Solver bench on xps (heavily loaded): 4x4 lines of 50–62 moves in 50–820 ms, 5x5 in 40 ms–3 s.
 
 ## Next
