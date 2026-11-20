@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { storeToken, verifyEntitlement, premiumNow } from '@/lib/entitlement';
+import RestoreForm from '@/lib/RestoreForm';
 import { savePuzzleScore, getPuzzleLeaderboard } from '@/lib/firebase';
 import {
   login as saveName,
@@ -97,11 +99,12 @@ export default function SlidingNumbers() {
       window.history.replaceState({}, '', window.location.pathname);
       fetch(`/games/sliding-numbers/api/verify-purchase?session_id=${encodeURIComponent(sessionId)}`)
         .then((r) => r.json())
-        .then((d) => { if (d && d.premium === true) { setPremium(true); setPremiumState(true); setToast('Full game unlocked in this browser.'); } })
+        .then((d) => { if (d && d.premium === true) { if (typeof d.token === 'string' && d.token) storeToken(d.token); setPremium(true); setPremiumState(true); setToast('Full game unlocked in this browser.'); } })
         .catch(() => {});
     }
     setName(getPlayerName());
-    setPremiumState(isPremium());
+    setPremiumState(premiumNow());
+    if (!sessionId) verifyEntitlement().then(setPremiumState);
     setTries(getDailyTries());
     setStreak(dailyStreak());
     newGame(3, 'practice');
@@ -430,6 +433,7 @@ export default function SlidingNumbers() {
             </ul>
             <p className="price">$3</p>
             <button className="btn wide" onClick={() => window.open('https://buy.stripe.com/4gM7sEd912zWc8V0CX7Re0b', '_blank')}>Unlock now</button>
+            <RestoreForm onRestored={() => { setPremiumState(true); setModal('none'); setToast('Full game restored in this browser.'); }} />
           </div>
         </div>
       )}

@@ -1,3 +1,4 @@
+import { premiumNow } from './entitlement';
 const STORAGE_KEYS = {
   IS_PREMIUM: 'sliding_numbers_premium',
   DAILY_TRIES: 'sliding_numbers_daily_tries',
@@ -23,7 +24,7 @@ export function getPlayerName(): string {
 
 export function isPremium(): boolean {
   if (typeof window === 'undefined') return false;
-  return localStorage.getItem(STORAGE_KEYS.IS_PREMIUM) === 'true';
+  return premiumNow(); // server-bound: the signed token, not this localStorage flag (R1119-HQ4-STUDIOS-46)
 }
 
 export function setPremium(value: boolean): void {
