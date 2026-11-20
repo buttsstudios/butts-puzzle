@@ -291,7 +291,7 @@ export default function SlidingNumbers() {
   const inPlace = tiles.filter((v, i) => v === i && v !== blank).length;
 
   return (
-    <main className="sn">
+    <main className="sn" id="main" tabIndex={-1}>
       <div className="sn-head">
         <div>
           <div className="sn-eyebrow">Butts Studios · Games · 03</div>
